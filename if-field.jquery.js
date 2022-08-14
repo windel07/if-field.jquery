@@ -43,8 +43,16 @@ var IfField = (function () {
 						.data("if")
 						.split(",")
 						.map((item) => {
-							const inputName = item.split(":")[0];
-							const inputVal = item.split(":")[1];
+							let ifOperator = "==";
+
+							let inputName = item.split(":")[0];
+							let inputVal = item.split(":")[1];
+
+							if ("!" == inputVal.charAt(0)) {
+								ifOperator = "!=";
+
+								inputVal = inputVal.substring(1);
+							}
 
 							if (
 								!ifInputs.find(
@@ -53,7 +61,7 @@ var IfField = (function () {
 							)
 								ifInputs.push(inputName);
 
-							return `({{${inputName}}} == ${inputVal}) ${ifLogic} `;
+							return `({{${inputName}}} ${ifOperator} ${inputVal}) ${ifLogic} `;
 						})
 						.join("")
 						.slice(0, -4);
