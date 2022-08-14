@@ -88,6 +88,7 @@ var IfField = (function () {
 				const targetResult = eval(item.statement);
 
 				if (targetResult) item.target.show();
+				else item.target.hide();
 			});
 		}
 	};
@@ -102,15 +103,11 @@ var IfField = (function () {
 		"keydown",
 		"input, textarea",
 		debounce(function () {
-			targets.hide();
-
 			handleIf(this.name, this.value);
 		}, 500)
 	);
 
 	$(document).on("change", "input,select,textarea", function () {
-		targets.hide();
-
 		handleIf(this.name, this.value);
 	});
 })();
