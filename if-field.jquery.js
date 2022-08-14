@@ -108,7 +108,7 @@ var IfField = (function () {
 		}, 500)
 	);
 
-	$(document).on("change", "select", function () {
+	$(document).on("change", "input,select,textarea", function () {
 		targets.hide();
 
 		handleIf(this.name, this.value);
