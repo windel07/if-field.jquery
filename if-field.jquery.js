@@ -61,7 +61,7 @@ var IfField = (function () {
 							)
 								ifInputs.push(inputName);
 
-							return `({{${inputName}}} ${ifOperator} ${inputVal}) ${ifLogic} `;
+							return `($('[name="${inputName}"]').val() ${ifOperator} ${inputVal}) ${ifLogic} `;
 						})
 						.join("")
 						.slice(0, -4);
@@ -85,12 +85,7 @@ var IfField = (function () {
 
 		if (listenersArr.length) {
 			listenersArr.forEach((item) => {
-				const targetResult = eval(
-					item.statement.replaceAll(
-						`{{${fieldName}}}`,
-						`'${fieldVal}'`
-					)
-				);
+				const targetResult = eval(item.statement);
 
 				if (targetResult) item.target.show();
 			});
