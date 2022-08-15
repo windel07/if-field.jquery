@@ -126,8 +126,8 @@ var IfField = (function () {
 	});
 
 	$(document).on("keydown change", "input,select,textarea", function (evt) {
-		if ("change" == evt.type) handleContent(this.name);
-		else handleIf(this.name, this.value);
+		handleIf(this.name, this.value);
+		handleContent(this.name);
 	});
 
 	$(document).on(
