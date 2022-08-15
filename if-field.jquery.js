@@ -93,10 +93,41 @@ var IfField = (function () {
 		}
 	};
 
+	const handleContent = (fieldName) => {
+		const contentEl = $(`[data-content="${fieldName}"]`);
+		const inputEl = $(`[name="${fieldName}"]`);
+
+		if (!contentEl.length) return;
+
+		if ("file" == inputEl.prop("type")) {
+			handleIf(fieldName, inputEl.prop("value"));
+
+			Object.values(inputEl.prop("files")).map((item) => {
+				const prevURL = URL.createObjectURL(item);
+				const prevImg = $(
+					`<div class="if-field__image-prev">
+                        <img class="if-field__image-prev-img" src="${prevURL}"/>
+                        <div class="if-field__image-prev-holder"></div>
+                    </div>`
+				);
+
+				contentEl.addClass("if-field__image-prevs").append(prevImg);
+			});
+		} else {
+			contentEl.html(inputEl.val());
+		}
+	};
+
 	initialize();
 
 	$("input,select,textarea").each(function () {
 		handleIf(this.name, this.value);
+		handleContent(this.name);
+	});
+
+	$(document).on("keydown change", "input,select,textarea", function (evt) {
+		if ("change" == evt.type) handleContent(this.name);
+		else handleIf(this.name, this.value);
 	});
 
 	$(document).on(
@@ -106,8 +137,4 @@ var IfField = (function () {
 			handleIf(this.name, this.value);
 		}, 500)
 	);
-
-	$(document).on("change", "input,select,textarea", function () {
-		handleIf(this.name, this.value);
-	});
 })();
