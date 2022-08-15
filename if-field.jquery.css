@@ -1,0 +1,27 @@
+.if-field__image-prevs {
+    margin: 0 -5px;
+    font-size: 0;
+    line-height: 1;
+    display: flex;
+    flex-wrap: wrap;
+}
+.if-field__image-prev {
+    margin: 5px;
+    position: relative;
+    z-index: 10;
+}
+.if-field__image-prev-img {
+    width: 75px;
+    height: 75px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+.if-field__image-prev-holder {
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 0 5px 2px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
