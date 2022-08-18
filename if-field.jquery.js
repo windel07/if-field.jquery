@@ -10,7 +10,7 @@
 
 var IfField = (function () {
 	let listeners = [];
-	const targets = $("[data-if]");
+	const targets = $('[data-if]');
 
 	const debounce = (func, wait, immediate) => {
 		var timeout;
@@ -36,34 +36,30 @@ var IfField = (function () {
 			listeners = Array.from(
 				targets.map(function () {
 					const ifTarget = $(this);
-					const ifLogic = ifTarget.data("logic") || "&&";
+					const ifLogic = ifTarget.data('logic') || '&&';
 					const ifInputs = [];
 
 					const ifStatement = ifTarget
-						.data("if")
-						.split(",")
+						.data('if')
+						.split(',')
 						.map((item) => {
-							let ifOperator = "==";
+							let ifOperator = '==';
 
-							let inputName = item.split(":")[0];
-							let inputVal = item.split(":")[1];
+							let inputName = item.split(':')[0];
+							let inputVal = item.split(':')[1];
 
-							if ("!" == inputVal.charAt(0)) {
-								ifOperator = "!=";
+							if ('!' == inputVal.charAt(0)) {
+								ifOperator = '!=';
 
 								inputVal = inputVal.substring(1);
 							}
 
-							if (
-								!ifInputs.find(
-									(ifInput) => ifInput == inputName
-								)
-							)
+							if (!ifInputs.find((ifInput) => ifInput == inputName))
 								ifInputs.push(inputName);
 
 							return `($('[name="${inputName}"]').val() ${ifOperator} ${inputVal}) ${ifLogic} `;
 						})
-						.join("")
+						.join('')
 						.slice(0, -4);
 
 					return {
@@ -99,10 +95,10 @@ var IfField = (function () {
 
 		if (!contentEl.length) return;
 
-		if ("file" == inputEl.prop("type")) {
-			handleIf(fieldName, inputEl.prop("value"));
+		if ('file' == inputEl.prop('type')) {
+			handleIf(fieldName, inputEl.prop('value'));
 
-			Object.values(inputEl.prop("files")).map((item) => {
+			Object.values(inputEl.prop('files')).map((item) => {
 				const prevURL = URL.createObjectURL(item);
 				const prevImg = $(
 					`<div class="if-field__image-prev">
@@ -111,7 +107,7 @@ var IfField = (function () {
                     </div>`
 				);
 
-				contentEl.addClass("if-field__image-prevs").append(prevImg);
+				contentEl.addClass('if-field__image-prevs').append(prevImg);
 			});
 		} else {
 			contentEl.html(inputEl.val());
@@ -120,19 +116,19 @@ var IfField = (function () {
 
 	initialize();
 
-	$("input,select,textarea").each(function () {
+	$('input,select,textarea').each(function () {
 		handleIf(this.name, this.value);
 		handleContent(this.name);
 	});
 
-	$(document).on("keydown change", "input,select,textarea", function (evt) {
+	$(document).on('keydown change', 'input,select,textarea', function (evt) {
 		handleIf(this.name, this.value);
 		handleContent(this.name);
 	});
 
 	$(document).on(
-		"keydown",
-		"input, textarea",
+		'keydown',
+		'input, textarea',
 		debounce(function () {
 			handleIf(this.name, this.value);
 		}, 500)
