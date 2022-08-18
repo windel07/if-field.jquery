@@ -48,14 +48,17 @@ var IfField = (function () {
 							let inputName = item.split(':')[0];
 							let inputVal = item.split(':')[1];
 
+							if (!ifInputs.find((ifInput) => ifInput == inputName))
+								ifInputs.push(inputName);
+
+							if (!inputVal)
+								return `($('[name="${inputName}"]').val() != '') ${ifLogic} `;
+
 							if ('!' == inputVal.charAt(0)) {
 								ifOperator = '!=';
 
 								inputVal = inputVal.substring(1);
 							}
-
-							if (!ifInputs.find((ifInput) => ifInput == inputName))
-								ifInputs.push(inputName);
 
 							return `($('[name="${inputName}"]').val() ${ifOperator} ${inputVal}) ${ifLogic} `;
 						})
